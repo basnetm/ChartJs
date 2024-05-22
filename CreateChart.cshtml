@@ -1,0 +1,36 @@
+﻿@model MyAddressApplication.Models.MyDemoTableModel
+@{
+    ViewBag.Title = "CreateChart";
+}
+
+<h2>CreateChart</h2>
+<canvas id="myChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var ctx = document.getElementById('myChart').getContext('2d');
+             var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Json.Encode(ViewBag.Dates)),
+                    datasets: [{
+                        label: 'Total Amount',
+                        data: @Html.Raw(Json.Encode(ViewBag.Amounts)),
+                        backgroundColor: @Html.Raw(Json.Encode(ViewBag.BackgroundColors)),
+                        borderColor: @Html.Raw(Json.Encode(ViewBag.BorderColors)),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
